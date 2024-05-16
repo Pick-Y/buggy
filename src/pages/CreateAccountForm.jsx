@@ -41,18 +41,21 @@ to {
 }
 `;
 
-
-
 const FirstDiv = styled.div`
-  background-color: '';
+  background-color: "";
+  width: 300px;
+  height: 200px;
   animation-duration: 0.2s;
-  animation-name: ${(props) => (props.buttonLeftClicked ? fadeOutLeft : (props.buttonRightClicked ? fadeOutRight: 'none'))};
+  animation-name: ${(props) =>
+    props.buttonLeftClicked
+      ? fadeOutLeft
+      : props.buttonRightClicked
+      ? fadeOutRight
+      : "none"};
 `;
 
 const CreateAccountForm = () => {
-
-  
-  const pages = [<PersonalInfo />, <EducationInfo />]
+  const pages = [<PersonalInfo />, <EducationInfo />];
   const [buttonLeftClicked, setButtonLeftClicked] = useState(true);
   const [buttonRightClicked, setButtonRightClicked] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
@@ -64,11 +67,9 @@ const CreateAccountForm = () => {
     setTimeout(() => {
       setButtonLeftClicked(true); // Set clicked state to true after a short delay
     }, 10);
-    if(currentPage < pages.length - 1){
-      setCurrentPage(currentPage + 1)
+    if (currentPage < pages.length - 1) {
+      setCurrentPage(currentPage + 1);
     }
-
-    
   };
 
   const handlePrevious = () => {
@@ -81,7 +82,6 @@ const CreateAccountForm = () => {
       setCurrentPage(currentPage - 1);
     }
   };
-
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -93,14 +93,13 @@ const CreateAccountForm = () => {
     validationSchema: validationSchemaObject,
     onSubmit: (values) => {
       //HANDLE SUBMIT
-      console.log(values)
+      console.log(values);
       createAccount(values)
         .then((response) => {
           console.log("Account created successfully:", response);
           // Handle successful response
           if (response.status === 200) {
             //here, it should redirect to the user account page
-
           }
         })
         .catch((error) => {
@@ -124,6 +123,7 @@ const CreateAccountForm = () => {
         Second Container
         <Box
           sx={{
+            bgcolor: "green",
             display: "flex",
             "@media (max-width: 600px)": {
               flexDirection: "column",
@@ -136,10 +136,35 @@ const CreateAccountForm = () => {
             marginBottom: "50px",
           }}
         >
-          <Box sx={{ bgcolor: "yellow", width: "50%", height: "100vh" }}></Box>
-          <Box sx={{ bgcolor: "#e2fdff", width: "50%", height: "100vh" }}>
+          <Box
+            sx={{
+              bgcolor: "yellow",
+              width: "50%",
+              height: "100%",
+              "@media (max-width: 600px)": {
+                width: "100%",
+              },
+            }}
+          ></Box>
+          <Box
+            sx={{
+              bgcolor: "#e2fdff",
+              width: "50%",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              "@media (max-width: 600px)": {
+                width: "100%",
+              },
+            }}
+          >
             <form onSubmit={formik.handleSubmit} autoComplete="off">
-              <FirstDiv buttonLeftClicked={buttonLeftClicked} buttonRightClicked={buttonRightClicked}>
+              <FirstDiv
+                buttonLeftClicked={buttonLeftClicked}
+                buttonRightClicked={buttonRightClicked}
+              >
                 {currentPage === 0 ? (
                   <PersonalInfo
                     firstname={formik.firstname}
