@@ -11,7 +11,8 @@ import {
 import { keyframes } from "styled-components";
 import AccountCreatedModal from "../components/AccountCreated";
 import { useNavigate } from "react-router-dom";
-import PersonalInfo from "../components/backPackerRegistrationComponents/BackPackerPersonalInfo";
+import BackPackerFormFirstPage from "../components/backPackerRegistrationComponents/BackPackerFormFirstPage.jsx";
+import BackPackerFormSecondPage from "../components/backPackerRegistrationComponents/BackPackerFormSecondPage.jsx";
 import EducationInfo from "../components/backPackerRegistrationComponents/BackPackerEducation";
 import ButtonPreviousNext from "../components/formButtonsPreviousNext.jsx";
 //Sets the color of the error text red
@@ -44,7 +45,7 @@ to {
 const FirstDiv = styled.div`
   background-color: "";
   width: 300px;
-  height: 200px;
+  height: 400px;
   animation-duration: 0.2s;
   animation-name: ${(props) =>
     props.buttonLeftClicked
@@ -55,20 +56,25 @@ const FirstDiv = styled.div`
 `;
 
 const CreateAccountForm = () => {
-  const pages = [<PersonalInfo />, <EducationInfo />];
+  const pages = [<BackPackerFormFirstPage />, <EducationInfo />];
   const [buttonLeftClicked, setButtonLeftClicked] = useState(true);
   const [buttonRightClicked, setButtonRightClicked] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   //const navigate = useNavigate();
 
   const handleNext = () => {
-    setButtonLeftClicked(false);
-    setTimeout(() => {
-      setButtonLeftClicked(true); // Set clicked state to true after a short delay
-    }, 10);
-    if (currentPage < pages.length - 1) {
-      setCurrentPage(currentPage + 1);
+    if (isFormValid) {
+      setButtonLeftClicked(false);
+      setTimeout(() => {
+        setButtonLeftClicked(true); // Set clicked state to true after a short delay
+      }, 10);
+      if (currentPage < pages.length - 1) {
+        setCurrentPage(currentPage + 1);
+      }
+    }else{
+      alert("fill the form")
     }
   };
 
@@ -87,8 +93,10 @@ const CreateAccountForm = () => {
       firstname: "",
       lastname: "",
       email: "",
-      education: "",
       password: "",
+      // dob:"",
+      // education: "",
+      // password: "",
     },
     validationSchema: validationSchemaObject,
     onSubmit: (values) => {
@@ -108,6 +116,13 @@ const CreateAccountForm = () => {
         });
       //END OF HANDLESUBMIT
     },
+  });
+
+  const dynamicErrors = {};
+  Object.keys(formik.values).forEach((field) => {
+    if (formik.errors[field]) {
+      dynamicErrors[field] = formik.errors[field];
+    }
   });
 
   return (
@@ -166,24 +181,20 @@ const CreateAccountForm = () => {
                 buttonRightClicked={buttonRightClicked}
               >
                 {currentPage === 0 ? (
-                  <PersonalInfo
+                  <BackPackerFormFirstPage
                     firstname={formik.firstname}
                     lastname={formik.lastname}
                     email={formik.email}
                     password={formik.password}
                     handleChange={formik.handleChange}
-                    errors={formik.errors}
+                    errors={dynamicErrors}
                     touched={formik.touched}
                     colorError={colorError}
-                  ></PersonalInfo>
+                    isFormValid={isFormValid}
+                    setIsFormValid={setIsFormValid}
+                  ></BackPackerFormFirstPage>
                 ) : currentPage === 1 ? (
-                  <EducationInfo
-                    education={formik.education}
-                    handleChange={formik.handleChange}
-                    errors={formik.errors}
-                    touched={formik.touched}
-                    colorError={colorError}
-                  ></EducationInfo>
+                  <div>moved to second page`</div>
                 ) : null}
               </FirstDiv>
 
@@ -207,5 +218,4 @@ const CreateAccountForm = () => {
     </Container>
   );
 };
-
 export default CreateAccountForm;
