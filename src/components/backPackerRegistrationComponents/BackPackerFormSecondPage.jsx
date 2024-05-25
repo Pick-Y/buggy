@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo } from "react";
 import TextField from "@mui/material/TextField";
-import { Grid,Radio, 
+import { 
+  Grid,
+  MenuItem,
+  Radio, 
   RadioGroup, 
   FormControl, 
   FormControlLabel, 
   FormLabel } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { boolean, object } from "yup";
+import countryList from 'react-select-country-list'
 
 //Sets the color of the error text red
 const BackPackerFormSecondPage = ({
@@ -20,7 +24,7 @@ const BackPackerFormSecondPage = ({
   touched,
   colorError,
 }) => {
-
+  const countries = useMemo(() => countryList().getData(), [])
 
 
 
@@ -37,6 +41,7 @@ return (
         <Grid item xs={12} sm={12}>
           <TextField
             fullWidth
+            select
             type="text"
             id="nationality"
             name="nationality"
@@ -44,7 +49,14 @@ return (
             variant="outlined"
             onChange={handleChange}
             value={nationality}
-          />
+          > 
+          
+          {countries.map(option => (
+                <MenuItem key={option.value} value={option.label}>
+                  {option.label}
+                </MenuItem>
+              ))}
+          </TextField>
           {touched.nationality && errors.nationality && (
             <div style={{ color: colorError }}>{errors.nationality}</div>
           )}
