@@ -1,22 +1,23 @@
 import React, { useEffect, useMemo } from "react";
 import TextField from "@mui/material/TextField";
-import { 
+import {
   Grid,
   MenuItem,
-  Radio, 
-  RadioGroup, 
-  FormControl, 
-  FormControlLabel, 
-  FormLabel } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import { boolean, object } from "yup";
-import countryList from 'react-select-country-list'
+  Radio,
+  RadioGroup,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+} from "@mui/material";
+import countryList from "react-select-country-list";
 
-//Sets the color of the error text red
+export const secondPageFields = ["nationality", "age", "gender"];
+
 const BackPackerFormSecondPage = ({
-  nationality,
-  age,
-  gender,
+  // nationality,
+  // age,
+  // gender,
+  values,
   handleChange,
   errors,
   isFormValid,
@@ -24,18 +25,15 @@ const BackPackerFormSecondPage = ({
   touched,
   colorError,
 }) => {
-  const countries = useMemo(() => countryList().getData(), [])
+  const countries = useMemo(() => countryList().getData(), []);
 
+  console.log(errors);
+  useEffect(() => {
+    const isValid = Object.keys(errors).length === 0;
+    setIsFormValid(isValid);
+  }, [errors, setIsFormValid]);
 
-
-
-useEffect(() =>{
-    
-    const isValid = (Object.keys(errors).length === 0)
-    setIsFormValid(isValid)
-  },[errors,setIsFormValid])
-  
-return (
+  return (
     <>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12}>
@@ -48,14 +46,13 @@ return (
             label="Nationality"
             variant="outlined"
             onChange={handleChange}
-            value={nationality}
-          > 
-          
-          {countries.map(option => (
-                <MenuItem key={option.value} value={option.label}>
-                  {option.label}
-                </MenuItem>
-              ))}
+            value={values.nationality}
+          >
+            {countries.map((option) => (
+              <MenuItem key={option.value} value={option.label}>
+                {option.label}
+              </MenuItem>
+            ))}
           </TextField>
           {touched.nationality && errors.nationality && (
             <div style={{ color: colorError }}>{errors.nationality}</div>
@@ -71,37 +68,36 @@ return (
             label="Age"
             variant="outlined"
             onChange={handleChange}
-            value={age}
+            value={values.age}
           />
           {touched.age && errors.age && (
             <div style={{ color: colorError }}>{errors.age}</div>
           )}
         </Grid>
         <Grid item xs={12}>
-        <FormControl component="fieldset">
-    <FormLabel component="legend">Gender</FormLabel>
-    <RadioGroup 
-      row
-      aria-label="gender" 
-      name="gender" 
-      value={gender} 
-      onChange={handleChange}
-    >
-      <FormControlLabel value="male" control={<Radio />} label="Male" />
-      <FormControlLabel value="female" control={<Radio />} label="Female" />
-      <FormControlLabel value="other" control={<Radio />} label="Other" />
-    </RadioGroup>
-  </FormControl>
-          {/* <TextField
-            fullWidth
-            type="text"
-            id="gender"
-            name="gender"
-            label="Gender"
-            onChange={handleChange}
-            value={gender}
-          ></TextField> */}
-          {errors.gender ? (
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Gender</FormLabel>
+            <RadioGroup
+              row
+              aria-label="gender"
+              name="gender"
+              value={values.gender}
+              onChange={handleChange}
+            >
+              <FormControlLabel value="male" control={<Radio />} label="Male" />
+              <FormControlLabel
+                value="female"
+                control={<Radio />}
+                label="Female"
+              />
+              <FormControlLabel
+                value="other"
+                control={<Radio />}
+                label="Other"
+              />
+            </RadioGroup>
+          </FormControl>
+          {touched.gender && errors.gender ? (
             <div style={{ color: colorError }}>{errors.gender}</div>
           ) : (
             ""
