@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import TextField from "@mui/material/TextField";
-import { Grid, Button, Container, Box } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import { boolean, object } from "yup";
+import { Grid } from "@mui/material";
 
-//Sets the color of the error text red
+export const firstPageFields = ["firstname", "lastname", "email"];
+
 const BackPackerFormFirstPage = ({
-  firstname,
-  lastname,
-  email,
+  // firstname,
+  // lastname,
+  // email,
   //password,
+  values,
   handleChange,
   errors,
   isFormValid,
@@ -17,26 +17,13 @@ const BackPackerFormFirstPage = ({
   touched,
   colorError,
 }) => {
+  useEffect(() => {
+    const isValid = Object.keys(errors).length === 0;
 
+    setIsFormValid(isValid);
+  }, [errors, setIsFormValid, touched]);
 
-
-
-// const [formErrors,setFormErrors] = useState({})
-// const [isFormValid, setIsFormValid] = useState(false)
-
-
-
-
-useEffect(() =>{
-    //console.log(Object.keys(errors).length)
-    // setFormErrors(errors)
-    // setIsFormValid(Object.keys(errors).length === 0)
-    //console.log(isFormValid)
-    const isValid = (Object.keys(errors).length === 0)
-    setIsFormValid(isValid)
-  },[errors,setIsFormValid])
-  
-return (
+  return (
     <>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12}>
@@ -48,7 +35,7 @@ return (
             label="First Name"
             variant="outlined"
             onChange={handleChange}
-            value={firstname}
+            value={values.firstname}
           />
           {touched.firstname && errors.firstname && (
             <div style={{ color: colorError }}>{errors.firstname}</div>
@@ -64,7 +51,7 @@ return (
             label="Last Name"
             variant="outlined"
             onChange={handleChange}
-            value={lastname}
+            value={values.lastname}
           />
           {touched.lastname && errors.lastname && (
             <div style={{ color: colorError }}>{errors.lastname}</div>
@@ -78,30 +65,16 @@ return (
             name="email"
             label="Email"
             onChange={handleChange}
-            value={email}
+            value={values.email}
           ></TextField>
-          {errors.email ? (
+          {touched.email && errors.email ? (
             <div style={{ color: colorError }}>{errors.email}</div>
           ) : (
             ""
           )}
         </Grid>
 
-        <Grid item xs={12}>
-          {/* <TextField
-            fullWidth
-            type="text"
-            id="password"
-            name="password"
-            label="Password"
-            variant="outlined"
-            onChange={handleChange}
-            value={password}
-          />
-          {errors.password ? (
-            <div style={{ color: colorError }}>{errors.password}</div>
-          ) : null} */}
-        </Grid>
+        <Grid item xs={12}></Grid>
       </Grid>
     </>
   );
