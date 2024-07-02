@@ -13,6 +13,12 @@ import countryList from "react-select-country-list";
 
 export const secondPageFields = ["nationality", "age", "gender"];
 
+const ageRanges = [
+  { label: "18-23", value: "18-23" },
+  { label: "24-26", value: "24-26" },
+  { label: "27-33", value: "27-33" },
+];
+
 const BackPackerFormSecondPage = ({
   // nationality,
   // age,
@@ -62,6 +68,7 @@ const BackPackerFormSecondPage = ({
         <Grid item xs={12} sm={12}>
           <TextField
             fullWidth
+            select
             type="text"
             id="age"
             name="age"
@@ -69,7 +76,13 @@ const BackPackerFormSecondPage = ({
             variant="outlined"
             onChange={handleChange}
             value={values.age}
-          />
+          >
+            {ageRanges.map((option) => (
+              <MenuItem key={option.value} value={option.label}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
           {touched.age && errors.age && (
             <div style={{ color: colorError }}>{errors.age}</div>
           )}
