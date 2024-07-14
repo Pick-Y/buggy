@@ -1,9 +1,13 @@
 // backend/server.js
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 5001; // Set the port for the server
-const cors = require('cors');
 const bodyParser = require('body-parser');
+const PORT = process.env.PORT || 5001; // Set the port for the server
+const sequelize = require('./database/db.connection'); // Adjust path as necessary
+
+const JobSearcherCreate = require('../backend/database/controllers/jobSearcherController');
+const cors = require('cors');
+
 
 
 app.use(cors());
@@ -14,19 +18,16 @@ app.get('/', (req, res) => {
   res.send('Hello from the backend!');
 });
 
-
-app.post('/create-account', (req, res) => {
-  // Extract data from the request body
-  const data = req.body;
-
-  // Do something with the data (e.g., save it to a database)
-  console.log('Received data:', data);
-
-  // Send a response
-  res.status(200).send('Data received successfully');
+sequelize.sync().then(() => {
+  console.log('Database synced');
+}).catch(err => {
+  console.error('Error syncing database:', err);
 });
+app.post('/create-account-jobsearcher', JobSearcherCreate.createJobSearcher)
 
-// Start the server
+
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
