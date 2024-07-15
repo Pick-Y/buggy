@@ -9,8 +9,7 @@ import {
   createAccount,
 } from "../utils/createAccountFormValidationUtils";
 import { keyframes } from "styled-components";
-import AccountCreatedModal from "../components/AccountCreated";
-import { useNavigate } from "react-router-dom";
+
 import BackPackerFormFirstPage, {
   firstPageFields,
 } from "../components/backPackerRegistrationComponents/BackPackerFormFirstPage.jsx";
@@ -23,7 +22,7 @@ import BackPackerFormThirdPage, {
 import BackPackerFormFourthPage, {
   fourthPageFields,
 } from "../components/backPackerRegistrationComponents/BackPackerFormFourthPage.jsx";
-import EducationInfo from "../components/backPackerRegistrationComponents/BackPackerEducation";
+
 import ButtonPreviousNext from "../components/formButtonsPreviousNext.jsx";
 //Sets the color of the error text red
 const colorError = "red";
@@ -244,10 +243,10 @@ const CreateAccountForm = () => {
               >
                 {currentPage === 0 ? (
                   <BackPackerFormFirstPage
-                    firstname={formik.firstname}
-                    lastname={formik.lastname}
-                    email={formik.email}
-                    password={formik.password}
+                    // firstname={formik.firstname}
+                    // lastname={formik.lastname}
+                    // email={formik.email}
+                    values={formik.values}
                     handleChange={formik.handleChange}
                     errors={singlePageErrors}
                     touched={formik.touched}
@@ -257,9 +256,10 @@ const CreateAccountForm = () => {
                   />
                 ) : currentPage === 1 ? (
                   <BackPackerFormSecondPage
-                    nationality={formik.nationality}
-                    age={formik.age}
-                    gender={formik.gender}
+                    // nationality={formik.nationality}
+                    // age={formik.age}
+                    // gender={formik.gender}
+                    values={formik.values}
                     handleChange={formik.handleChange}
                     errors={singlePageErrors}
                     touched={formik.touched}
@@ -269,9 +269,10 @@ const CreateAccountForm = () => {
                   />
                 ) : currentPage === 2 ? (
                   <BackPackerFormThirdPage
-                    education={formik.education}
-                    currentvisa={formik.currentvisa}
-                    workrights={formik.workrights}
+                    // education={formik.education}
+                    // currentvisa={formik.currentvisa}
+                    // workrights={formik.workrights}
+                    values={formik.values}
                     handleChange={formik.handleChange}
                     errors={singlePageErrors}
                     touched={formik.touched}
@@ -281,8 +282,9 @@ const CreateAccountForm = () => {
                   />
                 ) : currentPage === 3 ? (
                   <BackPackerFormFourthPage
-                    password={formik.password}
-                    confirmpassword={formik.confirmpassword}
+                    // password={formik.password}
+                    // confirmpassword={formik.confirmpassword}
+                    values={formik.values}
                     handleChange={formik.handleChange}
                     errors={singlePageErrors}
                     touched={formik.touched}
