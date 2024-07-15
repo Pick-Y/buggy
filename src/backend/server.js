@@ -23,7 +23,8 @@ sequelize.sync().then(() => {
 }).catch(err => {
   console.error('Error syncing database:', err);
 });
-app.post('/create-account-jobsearcher', JobSearcherCreate.createJobSearcher)
+
+app.post('API/create-account-jobsearcher', JobSearcherCreate.createJobSearcher)
 
 
 
