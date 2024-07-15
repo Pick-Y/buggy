@@ -26,7 +26,7 @@ export const createAccount = (values) => {
   console.log(values);
   return new Promise((resolve, reject) => {
     axios
-      .post("http://localhost:5001/create-account-jobsearcher", values)
+      .post("http://localhost:5001/API/create-account-jobsearcher", values)
       .then((response) => {
         resolve(response); // Resolve with the response data
       })
