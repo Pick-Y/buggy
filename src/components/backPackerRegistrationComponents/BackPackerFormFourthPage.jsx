@@ -5,8 +5,9 @@ import { Grid } from "@mui/material";
 export const fourthPageFields = ["password", "confirmpassword"];
 
 const BackPackerFormFourthPage = ({
-  password,
-  confirmpassword,
+  //   password,
+  //   confirmpassword,
+  values,
   handleChange,
   errors,
   setIsFormValid,
@@ -16,7 +17,6 @@ const BackPackerFormFourthPage = ({
   useEffect(() => {
     const isValid = Object.keys(errors).length === 0;
     console.log(errors);
-    console.log(touched);
 
     setIsFormValid(isValid);
   }, [errors, setIsFormValid]);
@@ -34,9 +34,9 @@ const BackPackerFormFourthPage = ({
               label="Password"
               variant="outlined"
               onChange={handleChange}
-              value={password}
+              value={values.password}
             />
-            {errors.password ? (
+            {touched.password && errors.password ? (
               <div style={{ color: colorError }}>{errors.password}</div>
             ) : null}
           </Grid>
@@ -48,9 +48,9 @@ const BackPackerFormFourthPage = ({
             label="Confirm Password"
             variant="outlined"
             onChange={handleChange}
-            value={confirmpassword}
+            value={values.confirmpassword}
           />
-          {errors.confirmpassword && (
+          {touched.confirmpassword && errors.confirmpassword && (
             <div style={{ color: colorError }}>{errors.confirmpassword}</div>
           )}
         </Grid>
