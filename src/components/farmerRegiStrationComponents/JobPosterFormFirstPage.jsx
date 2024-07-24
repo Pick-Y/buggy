@@ -1,19 +1,28 @@
 import React, { useEffect } from "react";
 import TextField from "@mui/material/TextField";
-import { Grid } from "@mui/material";
+import { Grid, MenuItem } from "@mui/material";
 
 export const firstPageFields = ["businessname", "tradingas", "industry"];
-// businessname: "",
-//       tradingas: "",
-//       industry: "",
-//       address: "",
-//       postalcode: "",
-//       state: "",
-//       phone: "",
-//       email: "",
-//       contactperson: "",
-//       password: "",
-//       confirmpassword: "",
+
+const industryOptions = [
+  { value: "tourism-hospitality", label: "Tourism and Hospitality" },
+  { value: "plant-animal-cultivation", label: "Plant and animal cultivatioon" },
+  { value: "fishing-pearling", label: "Fishing and pearling" },
+  { value: "tree-farming-felling", label: "Tree farming and felling" },
+  { value: "mining", label: "Mining" },
+  { value: "construction", label: "Construction" },
+  { value: "mining", label: "Mining" },
+  { value: "construction", label: "Construction" },
+  {
+    value: "recovery-work-weather-affected-areas ",
+    label: "Recovery work in weather-affected areas",
+  },
+  {
+    value: "critical-covid-19-work  ",
+    label: "Critical COVID-19 work ",
+  },
+];
+
 const JobPosterFormFirstPage = ({
   values,
   handleChange,
@@ -66,13 +75,20 @@ const JobPosterFormFirstPage = ({
         <Grid item xs={12}>
           <TextField
             fullWidth
+            select
             type="text"
             id="industry"
             name="industry"
             label="Industry"
             onChange={handleChange}
             value={values.industry}
-          ></TextField>
+          >
+            {industryOptions.map((option) => (
+              <MenuItem key={option.value} value={option.label}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
           {touched.industry && errors.industry ? (
             <div style={{ color: colorError }}>{errors.industry}</div>
           ) : (
