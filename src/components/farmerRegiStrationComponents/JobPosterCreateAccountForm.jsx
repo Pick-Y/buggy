@@ -1,27 +1,27 @@
 import React, { useState, useEffect, useCallback } from "react";
-import TextField from "@mui/material/TextField";
-import { Grid, Button, Container, Box, Switch } from "@mui/material";
+
+import { Button } from "@mui/material";
 import styled from "styled-components";
-import Typography from "@mui/material/Typography";
+
 import { useFormik } from "formik";
 import {
-  validationSchemaObject,
-  createAccount,
-} from "../../utils/createAccountFormValidationUtils";
+  jobPostervalidationSchemaObject,
+  createJobPosterAccount,
+} from "../../utils/createAccountFormValidationUtils.js";
 import { keyframes } from "styled-components";
 
-import BackPackerFormFirstPage, {
+import JobPosterFormFirstPage, {
   firstPageFields,
-} from "./BackPackerFormFirstPage.jsx";
-import BackPackerFormSecondPage, {
+} from "./JobPosterFormFirstPage.jsx";
+import JobPosterFormSecondPage, {
   secondPageFields,
-} from "./BackPackerFormSecondPage.jsx";
-import BackPackerFormThirdPage, {
+} from "./JobPosterFormSecondPage.jsx";
+import JobPosterFormThirdPage, {
   thirdPageFields,
-} from "./BackPackerFormThirdPage.jsx";
-import BackPackerFormFourthPage, {
+} from "./JobPosterFormThirdPage.jsx";
+import JobPosterFormFourthPage, {
   fourthPageFields,
-} from "./BackPackerFormFourthPage.jsx";
+} from "./JobposterFormFourthPage.jsx";
 
 import ButtonPreviousNext from "../formButtonsPreviousNext.jsx";
 //Sets the color of the error text red
@@ -64,12 +64,12 @@ const FirstDiv = styled.div`
       : "none"};
 `;
 
-const JobSeekerCreateAccountForm = () => {
+const JobPosterCreateAccountForm = () => {
   const pages = [
-    <BackPackerFormFirstPage />,
-    <BackPackerFormSecondPage />,
-    <BackPackerFormThirdPage />,
-    <BackPackerFormFourthPage />,
+    <JobPosterFormFirstPage />,
+    <JobPosterFormSecondPage />,
+    <JobPosterFormThirdPage />,
+    <JobPosterFormFourthPage />,
   ];
   const [buttonLeftClicked, setButtonLeftClicked] = useState(true);
   const [buttonRightClicked, setButtonRightClicked] = useState(true);
@@ -80,23 +80,23 @@ const JobSeekerCreateAccountForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      firstname: "",
-      lastname: "",
+      businessname: "",
+      tradingas: "",
+      industry: "",
+      address: "",
+      postalcode: "",
+      state: "",
+      phone: "",
       email: "",
-      nationality: "",
-      age: "",
-      gender: "",
-      education: "",
-      currentvisa: "",
-      workrights: "",
+      contactperson: "",
       password: "",
       confirmpassword: "",
     },
-    validationSchema: validationSchemaObject,
+    validationSchema: jobPostervalidationSchemaObject,
     onSubmit: (values) => {
       //HANDLE SUBMIT
       console.log(values);
-      createAccount(values)
+      createJobPosterAccount(values)
         .then((response) => {
           console.log("Account created successfully:", response);
           // Handle successful response
@@ -183,7 +183,7 @@ const JobSeekerCreateAccountForm = () => {
           buttonRightClicked={buttonRightClicked}
         >
           {currentPage === 0 ? (
-            <BackPackerFormFirstPage
+            <JobPosterFormFirstPage
               values={formik.values}
               handleChange={formik.handleChange}
               errors={singlePageErrors}
@@ -193,7 +193,7 @@ const JobSeekerCreateAccountForm = () => {
               setIsFormValid={setIsFormValid}
             />
           ) : currentPage === 1 ? (
-            <BackPackerFormSecondPage
+            <JobPosterFormSecondPage
               values={formik.values}
               handleChange={formik.handleChange}
               errors={singlePageErrors}
@@ -203,7 +203,7 @@ const JobSeekerCreateAccountForm = () => {
               setIsFormValid={setIsFormValid}
             />
           ) : currentPage === 2 ? (
-            <BackPackerFormThirdPage
+            <JobPosterFormThirdPage
               values={formik.values}
               handleChange={formik.handleChange}
               errors={singlePageErrors}
@@ -213,7 +213,7 @@ const JobSeekerCreateAccountForm = () => {
               setIsFormValid={setIsFormValid}
             />
           ) : currentPage === 3 ? (
-            <BackPackerFormFourthPage
+            <JobPosterFormFourthPage
               values={formik.values}
               handleChange={formik.handleChange}
               errors={singlePageErrors}
@@ -242,4 +242,4 @@ const JobSeekerCreateAccountForm = () => {
     </>
   );
 };
-export default JobSeekerCreateAccountForm;
+export default JobPosterCreateAccountForm;
